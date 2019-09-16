@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import $ from 'jquery'
-import './AddPrototype'
+// import './AddPrototype'
 import request from './Ajax'
 import days from './Day'
 

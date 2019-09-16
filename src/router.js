@@ -3,6 +3,17 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+// const requireAuth = (to, from, next) => {
+//   if (Auth.loggedIn()) {
+//     return next()
+//   } else {
+//     next({
+//       path: '/login',
+//       query: { redirect: to.fullPath }
+//     })
+//   }
+// }
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -10,15 +21,22 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import('./views/Home.vue')
+      meta: { layout: 'LayoutDefault' },
+      component: () => import('./views/Home')
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('./views/About.vue')
+      meta: { layout: 'LayoutDefault2' },
+      component: () => import('./views/About')
+      // beforeEnter: requireAuth
+    },
+    {
+      path: '/hello',
+      name: 'hello',
+      meta: { layout: 'LayoutDefault2' },
+      component: () => import('./views/HelloWorld')
+      // beforeEnter: requireAuth
     }
   ]
 })

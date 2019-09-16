@@ -1,7 +1,11 @@
-import _ from 'lodash'
+import indexOf from 'lodash/indexOf'
 
 String.prototype.toNum = function () {
   return Number(this)
+}
+
+String.prototype.firstUpperCase = function () {
+  return this.charAt(0).toUpperCase() + this.substr(1)
 }
 
 Array.prototype.eq = function (idx) {
@@ -17,6 +21,6 @@ Array.prototype.last = function () {
 }
 
 Array.prototype.remove = function (idx) {
-  this.splice(_.indexOf(this, idx), 1)
+  this.splice(indexOf(this, idx), 1)
   return this
 }

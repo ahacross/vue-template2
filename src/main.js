@@ -12,7 +12,7 @@ new Vue({
   store,
   render: h => h(App),
   metaInfo: {
-    title: 'template',
+    title: '뭐라할까',
     titleTemplate: '%s',
     meta: [
       { charset: 'utf-8' },

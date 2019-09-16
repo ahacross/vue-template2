@@ -1,5 +1,5 @@
 {
-  "name": "template2",
+  "name": "template",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "file-saver": "^2.0.2",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
+    "tui-grid": "^4.5.2",
     "vue": "^2.6.10",
     "vue-meta": "^2.2.2",
     "vue-router": "^3.0.3",
@@ -49,7 +50,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "no-extend-native": 0
+      "no-extend-native": 0,
+      "space-before-function-paren": 0
     }
   },
   "postcss": {

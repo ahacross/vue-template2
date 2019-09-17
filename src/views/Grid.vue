@@ -1,6 +1,7 @@
 <template>
   <tuiGrid v-bind="gridProps">
-    <template slot="custom">kakao <input type="text"></template>
+    <template slot="custom">kakao <el-input placeholder="Please input" v-model="input"></el-input>
+    </template>
   </tuiGrid>
 </template>
 
@@ -10,6 +11,7 @@ export default {
   name: 'Grid',
   data() {
     return {
+      input: '',
       gridProps: {
         columns: [
           {

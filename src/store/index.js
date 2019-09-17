@@ -4,6 +4,8 @@ import common from './common'
 import vuexI18n from 'vuex-i18n'
 import localeKo from './locale/ko'
 import localeEn from './locale/en'
+import locale from 'element-ui/lib/locale'
+import localeMap from '@/lib/elementUiLocaleMap'
 
 Vue.use(Vuex)
 
@@ -29,9 +31,24 @@ const mutations = {
   }
 }
 
+const getters = {
+  currentLanguage (state) {
+    return state.curLanguage.short
+  }
+}
+
+const actions = {
+  changeLanguage ({ commit }, lang) {
+    commit('setLanguage', lang)
+    locale.use(localeMap[lang])
+  }
+}
+
 const store = new Vuex.Store({
   state,
   mutations,
+  getters,
+  actions,
   modules: { common }
 })
 

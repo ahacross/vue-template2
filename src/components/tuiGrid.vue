@@ -66,11 +66,21 @@ export default {
     this.applyTheme()
     Grid.setLanguage(this.language)
 
+    const gridOptions = {
+      rowHeaders: ['checkbox', 'rowNum'],
+      rowHeight: 26,
+      scrollX: false,
+      scrollY: true,
+      columnOptions: {
+        resizable: true
+      }
+    }
+
     this.gridInstance = new Grid(Object.assign({
       el: document.getElementById('grid'),
       columns: this.columns,
       data: JSON.parse(JSON.stringify(this.data))
-    }, this.options))
+    }, Object.assign({}, gridOptions, this.options)))
 
     // data는 observe 기능을 빼고 넣어줘야함.
   },

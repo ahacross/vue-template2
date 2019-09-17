@@ -1,5 +1,7 @@
 <template>
-  <tuiGrid v-bind="gridProps" />
+  <tuiGrid v-bind="gridProps">
+    <template slot="custom">kakao <input type="text"></template>
+  </tuiGrid>
 </template>
 
 <script>
@@ -27,8 +29,7 @@ export default {
           },
           {
             header: 'Type',
-            name: 'type',
-            editor: 'text'
+            name: 'type'
           },
           {
             header: 'Release',
@@ -331,10 +332,30 @@ export default {
         options: {
           rowHeaders: ['checkbox', 'rowNum'],
           bodyHeight: 200,
-          rowHeight: 50
+          rowHeight: 30,
+          scrollX: false,
+          scrollY: false
         },
         language: 'ko',
-        theme: 'clean',
+        theme: {
+          name: 'myTheme',
+          value: {
+            cell: {
+              normal: {
+                background: '#fbfbfb',
+                border: '#e0e0e0',
+                color: '#050505'
+              },
+              header: {
+                background: '#ff0000',
+                border: '#ffff00'
+              },
+              editable: {
+                background: '#fbfbfb'
+              }
+            }
+          }
+        },
         title: '우왕'
       }
     }

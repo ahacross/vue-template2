@@ -2,6 +2,7 @@
   <div>
     <div class="GridBar">
       <div class="GridBar__title">{{ title }}</div>
+      <slot name="custom"></slot>
       <div class="GridBar__buttons">
         <button>{{ $t('buttons.add') }}</button>
         <button>{{ $t('buttons.del') }}</button>
@@ -42,17 +43,27 @@ export default {
       default: 'ko'
     },
     theme: {
-      type: String,
+      type: [String, Object],
       default: 'default'
     },
     title: {
       type: String,
       default: ''
+    },
+    buttons: {
+      type: Object,
+      default: () => {
+        return {
+          add: { hidden: false, disabled: false },
+          del: { hidden: false, disabled: false },
+          save: { hidden: false, disabled: false },
+          down: { hidden: false, disabled: false }
+        }
+      }
     }
   },
   mounted () {
-    // default, striped, clean
-    Grid.applyTheme(this.theme)
+    this.applyTheme()
     Grid.setLanguage(this.language)
 
     this.gridInstance = new Grid(Object.assign({
@@ -62,6 +73,25 @@ export default {
     }, this.options))
 
     // data는 observe 기능을 빼고 넣어줘야함.
+  },
+  methods: {
+    applyTheme() {
+      if (this.theme) {
+        if (typeof this.theme === 'string') {
+          // default, striped, clean
+          Grid.applyTheme(this.theme)
+        } else {
+          Grid.applyTheme(this.theme.name, this.theme.value)
+        }
+      }
+    }
+  },
+  beforeDestroy() {
+    Object.keys(this.$listeners).forEach((eventName) => {
+      this.gridInstance.off(eventName)
+    })
+    this.gridInstance.destroy()
+    this.gridInstance = null
   }
 }
 </script>

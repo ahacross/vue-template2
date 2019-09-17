@@ -37,6 +37,13 @@ export default new Router({
       meta: { layout: 'LayoutDefault2' },
       component: () => import('./views/HelloWorld')
       // beforeEnter: requireAuth
+    },
+    {
+      path: '/grid',
+      name: 'grid',
+      meta: { layout: 'LayoutDefault' },
+      component: () => import('./views/Grid')
+      // beforeEnter: requireAuth
     }
   ]
 })

@@ -40,4 +40,6 @@ Vue.use(vuexI18n.plugin, store)
 Vue.i18n.add('ko', localeKo)
 Vue.i18n.add('en', localeEn)
 
+Vue.i18n.set(state.curLanguage.short)
+
 export default store

@@ -50,8 +50,9 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "no-extend-native": 0,
-      "space-before-function-paren": 0
+      "no-debugger": "off",
+      "no-extend-native": "off",
+      "space-before-function-paren": "off"
     }
   },
   "postcss": {

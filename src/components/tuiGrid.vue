@@ -60,6 +60,8 @@ export default {
       columns: this.columns,
       data: JSON.parse(JSON.stringify(this.data))
     }, this.options))
+
+    // data는 observe 기능을 빼고 넣어줘야함.
   }
 }
 </script>

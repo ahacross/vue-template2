@@ -2,7 +2,7 @@
   <div>
     <el-date-picker></el-date-picker>
     <tuiGrid v-bind="gridProps">
-      <template slot="custom">kakao <el-input placeholder="Please input" v-model="input"></el-input>
+      <template #custom>kakao <el-input placeholder="Please input" size="mini" style="width: 100px" v-model="input"></el-input>
       </template>
     </tuiGrid>
   </div>

@@ -4,10 +4,10 @@
       <div class="GridBar__title">{{ title }}</div>
       <slot name="custom"></slot>
       <div class="GridBar__buttons">
-        <button>{{ $t('buttons.add') }}</button>
-        <button>{{ $t('buttons.del') }}</button>
-        <button>{{ $t('buttons.save') }}</button>
-        <button>{{ $t('buttons.down') }}</button>
+        <el-button size="mini">{{ $t('buttons.add') }}</el-button>
+        <el-button size="mini">{{ $t('buttons.del') }}</el-button>
+        <el-button size="mini">{{ $t('buttons.save') }}</el-button>
+        <el-button size="mini">{{ $t('buttons.down') }}</el-button>
       </div>
     </div>
     <div id="grid"></div>

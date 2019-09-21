@@ -6,6 +6,7 @@
 
 <script>
 import '@/lib/AddPrototype'
+import Default from './layouts/Default'
 import LayoutDefault from './layouts/LayoutDefault'
 import LayoutDefault2 from './layouts/LayoutDefault2'
 export default {
@@ -15,7 +16,7 @@ export default {
       layoutComponent: 'div'
     }
   },
-  components: { LayoutDefault, LayoutDefault2 },
+  components: { LayoutDefault, LayoutDefault2, Default },
   computed: {
     metaLayout () {
       return this.$route.meta.layout

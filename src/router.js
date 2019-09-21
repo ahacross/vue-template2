@@ -21,7 +21,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      meta: { layout: 'LayoutDefault' },
+      meta: { layout: 'Default' },
       component: () => import('./views/Home')
     },
     {

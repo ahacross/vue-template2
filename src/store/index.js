@@ -49,7 +49,6 @@ const actions = {
     commit('setLanguage', lang)
     const curLanguage = getters['currentLanguage']
 
-    console.log(curLanguage.i18n)
     Vue.i18n.set(curLanguage.i18n)
     locale.use(localeMap[curLanguage.elementUi])
   }

@@ -1,11 +1,18 @@
 // Common State.
 const state = {
+  menuPath: []
 }
 
 const mutations = {
+  menuPath(state, menuPath) {
+    state.menuPath = menuPath
+  }
 }
 
 const getters = {
+  getMenuPath(state) {
+    return state.menuPath.join(' > ')
+  }
 }
 
 const actions = {

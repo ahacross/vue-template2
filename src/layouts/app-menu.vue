@@ -1,35 +1,40 @@
 <template>
   <div class="AppMenu">
     <h1 class="AppMenu__title"> {{ lang('title') }} </h1>
-    <el-menu @select="kakao">
-      <el-menu-item index="1">
+    <el-menu
+      @select="saveMenuPath"
+      :default-active="defaultActive"
+      :unique-opened="true"
+      :router="true"
+      ref="appElMenu">
+      <el-menu-item index="dashboard" route="/">
         <i class="el-icon-document"></i>
         <span slot="title">{{ lang('dashboard') }}</span>
       </el-menu-item>
-      <el-submenu index="2">
+      <el-submenu index="serviceDevelopment">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">{{ lang('serviceDevelopment') }}</span>
         </template>
-        <el-menu-item index="2-1">{{ lang('smartContractDevelopment') }}</el-menu-item>
-        <el-menu-item index="2-2">{{ lang('smartContractVerification') }}</el-menu-item>
-        <el-menu-item index="2-3">{{ lang('smartContractVerificationResult') }}</el-menu-item>
-        <el-menu-item index="2-4">{{ lang('developmentGuide') }}</el-menu-item>
+        <el-menu-item index="smartContractDevelopment">{{ lang('smartContractDevelopment') }}</el-menu-item>
+        <el-menu-item index="smartContractVerification">{{ lang('smartContractVerification') }}</el-menu-item>
+        <el-menu-item index="smartContractVerificationResult">{{ lang('smartContractVerificationResult') }}</el-menu-item>
+        <el-menu-item index="developmentGuide">{{ lang('developmentGuide') }}</el-menu-item>
       </el-submenu>
-      <el-submenu index="3">
+      <el-submenu index="blockchainOperation">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">{{ lang('blockchainOperation') }}</span>
         </template>
-        <el-menu-item index="3-1">{{ lang('operatingService') }}</el-menu-item>
-        <el-menu-item index="3-2">{{ lang('changeServiceInformation') }}</el-menu-item>
-        <el-menu-item index="3-3">{{ lang('developerManagement') }}</el-menu-item>
-        <el-menu-item index="3-4">{{ lang('blockInformationSearch') }}</el-menu-item>
-        <el-menu-item index="3-5">{{ lang('transactionInformationSearch') }}</el-menu-item>
-        <el-menu-item index="3-6">{{ lang('platformUsageHistory') }}</el-menu-item>
-        <el-menu-item index="3-7">{{ lang('PlatformUsageDetails') }}</el-menu-item>
+        <el-menu-item index="operatingService">{{ lang('operatingService') }}</el-menu-item>
+        <el-menu-item index="changeServiceInformation">{{ lang('changeServiceInformation') }}</el-menu-item>
+        <el-menu-item index="developerManagement">{{ lang('developerManagement') }}</el-menu-item>
+        <el-menu-item index="blockInformationSearch">{{ lang('blockInformationSearch') }}</el-menu-item>
+        <el-menu-item index="transactionInformationSearch">{{ lang('transactionInformationSearch') }}</el-menu-item>
+        <el-menu-item index="platformUsageHistory">{{ lang('platformUsageHistory') }}</el-menu-item>
+        <el-menu-item index="PlatformUsageDetails">{{ lang('PlatformUsageDetails') }}</el-menu-item>
       </el-submenu>
-      <el-submenu index="4">
+      <el-submenu index="operationalStatistics">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">{{ lang('operationalStatistics') }}</span>
@@ -38,18 +43,18 @@
         <el-menu-item index="4-2">{{ lang('blockCreationTrend') }}</el-menu-item>
         <el-menu-item index="4-3">{{ lang('sCTransactionShare') }}</el-menu-item>
       </el-submenu>
-      <el-submenu index="5">
+      <el-submenu index="monitoring">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">{{ lang('monitoring') }}</span>
         </template>
-        <el-menu-item index="5-1">{{ lang('nodeMonitoring') }}</el-menu-item>
+        <el-menu-item index="nodeMonitoring">{{ lang('nodeMonitoring') }}</el-menu-item>
       </el-submenu>
-      <el-menu-item index="6">
+      <el-menu-item index="logout">
         <i class="el-icon-switch-button"></i>
         <span>{{ lang('logout') }}</span>
       </el-menu-item>
-      <el-menu-item index="7">
+      <el-menu-item index="language">
         <el-row>
           <el-col :span="10">
             {{ lang('language')}}
@@ -77,12 +82,13 @@
 
 <script>
 import { i18nTranslator } from '@/mixins/i18n'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'AppMenu',
   data () {
     return {
-      curLang: ''
+      curLang: '',
+      defaultActive: '/'
     }
   },
   computed: {
@@ -94,10 +100,36 @@ export default {
   created() {
     this.curLang = this.currentLanguage.key
   },
+  mounted() {
+    const routePath = this.$route.path
+
+    for (const [key, vm] of Object.entries(this.$refs.appElMenu.items)) {
+      if (vm.route === routePath) {
+        this.defaultActive = key
+      }
+    }
+  },
   methods: {
     ...mapActions(['changeLanguage']),
-    kakao() {
-      console.log(arguments)
+    ...mapMutations('common', ['menuPath']),
+    saveMenuPath(keyIdx, keyIdxPath, node) {
+      const menuPath = []
+
+      for (const index of keyIdxPath.reverse()) {
+        if (node.index !== index) {
+          node = node.parentMenu
+        }
+        menuPath.push(this.getMenuText(node))
+      }
+      menuPath.push(this.lang('title'))
+      this.menuPath(menuPath.reverse())
+    },
+    getMenuText(node) {
+      let menuText = node.$slots.default.first().text
+      if (!menuText) {
+        menuText = node.$slots.title.filter(vn => vn.tag === 'span').first().children.first().text
+      }
+      return menuText
     }
   },
   mixins: [i18nTranslator('menus')]

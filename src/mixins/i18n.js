@@ -7,8 +7,14 @@
 export const i18nTranslator = function(prefix) {
   return {
     methods: {
-      lang(name, noPrefix) {
-        return this.$t(noPrefix ? name : `${prefix}.${name}`)
+      lang(name, params, sumPrefix) {
+        if (params && sumPrefix) { // params가 있고 sumPrefix가 true 일 때
+          return this.$t(`${prefix}.${name}`, params)
+        } else if (params && !sumPrefix) { // params가 있고 sumPrefix가 false 일 때
+          return this.$t(name, params)
+        } else {
+          return this.$t(`${prefix}.${name}`)
+        }
       }
     }
   }

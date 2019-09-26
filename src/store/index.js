@@ -4,8 +4,8 @@ import common from './common'
 import vuexI18n from 'vuex-i18n'
 import localeKo from './locale/ko'
 import localeEn from './locale/en'
-import locale from 'element-ui/lib/locale'
-import localeMap from '@/lib/elementUiLocaleMap' //  언어추가하면 이 파일도 수정
+import { setElementUiLocale } from '@/lib/elementUiLocale' //  언어추가하면 이 파일도 수정
+import { getStorage, setStorage } from '../lib/cookie'
 
 Vue.use(Vuex)
 
@@ -27,7 +27,8 @@ let state = {
   ]
 }
 
-state.curLanguage = state.languages[0]
+const currentLang = getStorage('lang')
+state.curLanguage = currentLang ? state.languages.filter(language => language.key === currentLang).first() : state.languages.first()
 
 const mutations = {
   setLanguage (state, lang) {
@@ -50,7 +51,9 @@ const actions = {
     const curLanguage = getters['currentLanguage']
 
     Vue.i18n.set(curLanguage.i18n)
-    locale.use(localeMap[curLanguage.elementUi])
+    setElementUiLocale(curLanguage.elementUi)
+    setStorage('lang', lang)
+    location.reload()
   }
 }
 

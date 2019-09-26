@@ -6,9 +6,10 @@ import Meta from 'vue-meta'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import localeMap from '@/lib/elementUiLocaleMap'
-Vue.use(ElementUI, { locale: localeMap[store.getters.currentLanguage] })
+import { setElementUiLocale } from '@/lib/elementUiLocale'
 
+setElementUiLocale(store.getters.currentLanguage.key)
+Vue.use(ElementUI)
 Vue.use(Meta)
 Vue.config.productionTip = false
 

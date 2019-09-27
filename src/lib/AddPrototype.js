@@ -15,12 +15,18 @@ String.prototype.firstUpperCase = function () {
   return this.charAt(0).toUpperCase() + this.substr(1)
 }
 
+String.prototype.yyyyMMdd = function(sep) {
+  return `${this.substr(0, 4)}${sep}${this.substr(4, 2)}${sep}${this.substr(6, 2)}`
+}
+
 String.prototype.commaOff = function () {
-  return this.replace(/[^\d]+/g, '')
+  return this.split(',').join('')
 }
 
 Number.prototype.commaOn = function () {
-  return this.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+  const numStr = this.toString().split('.')
+  numStr[0] = numStr.first().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')
+  return numStr.join('.')
 }
 
 Array.prototype.eq = function (idx) {

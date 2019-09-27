@@ -1,9 +1,9 @@
 <template>
   <el-container class="Default">
-    <el-aside>
+    <el-aside :style="mainStyle">
       <app-menu />
     </el-aside>
-    <el-main>
+    <el-main :style="mainStyle">
       <main class="Default__main">
         <slot />
       </main>
@@ -15,6 +15,25 @@
 import AppMenu from './app-menu'
 export default {
   name: 'Default',
+  data() {
+    return {
+      mainStyle: {
+        height: ''
+      }
+    }
+  },
+  created() {
+    this.setHeight()
+    window.addEventListener('resize', this.setHeight)
+  },
+  methods: {
+    setHeight() {
+      this.mainStyle.height = `${window.innerHeight}px`
+    }
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.setHeight)
+  },
   components: { AppMenu }
 }
 </script>
@@ -26,7 +45,9 @@ html, body {
 
 .Default {
   & .el-aside {
-    padding: 20px
+    padding: 20px;
+    overflow: hidden;
+    /*overflow-y: auto;*/
   }
 }
 </style>

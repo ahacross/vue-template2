@@ -8,7 +8,7 @@ class Ajax {
   }
 
   url (url) {
-    if (!/$http.+/.test(url)) {
+    if (!/^http.+/.test(url)) {
       url = `${process.env.VUE_APP_BACKURL}${url}`
     }
     this._options.url = url

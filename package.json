@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "npm run serve",
+    "serve": "vue-cli-service serve --port 3000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -20,6 +21,7 @@
     "lodash": "^4.17.15",
     "tui-chart": "^3.7.0",
     "tui-grid": "^4.5.2",
+    "tui-pagination": "^3.3.3",
     "vue": "^2.6.10",
     "vue-meta": "^2.2.2",
     "vue-router": "^3.0.3",

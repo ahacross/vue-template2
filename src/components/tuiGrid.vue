@@ -4,28 +4,57 @@
       <div class="GridBar__title">{{ title }}</div>
       <slot name="custom"></slot>
       <div class="GridBar__buttons">
-        <el-button size="mini">{{ $t('buttons.add') }}</el-button>
-        <el-button size="mini">{{ $t('buttons.del') }}</el-button>
-        <el-button size="mini">{{ $t('buttons.save') }}</el-button>
-        <el-button size="mini">{{ $t('buttons.down') }}</el-button>
+        <el-button
+          v-if="buttonAdd.hide"
+          :disabled="buttonAdd.disabled"
+          size="mini">
+          {{ $t('button.add') }}
+        </el-button>
+        <el-button
+          v-if="buttonDel.hide"
+          :disabled="buttonDel.disabled"
+          size="mini">
+          {{ $t('button.del') }}
+        </el-button>
+        <el-button
+          v-if="buttonSave.hide"
+          :disabled="buttonSave.disabled"
+          size="mini">
+          {{ $t('button.save') }}
+        </el-button>
+        <el-button
+          v-if="buttonDown.hide"
+          :disabled="buttonDown.disabled"
+          @click="clickDownload"
+          size="mini">
+          {{ $t('button.down') }}
+        </el-button>
       </div>
     </div>
-    <div id="grid"></div>
+    <div :id="gridId"></div>
   </div>
 </template>
 
 <script>
 import 'tui-grid/dist/tui-grid.css'
+import 'tui-pagination/dist/tui-pagination.css'
 import 'tui-date-picker/dist/tui-date-picker.css'
 import Grid from 'tui-grid'
+import { exportExcel } from '@/lib/FileExport'
+import { generateUID } from '@/lib/Common'
+
 export default {
   name: 'tuiTable',
   data () {
     return {
-      gridInstance: null
+      gridInstance: null,
+      gridId: `grid_${generateUID()}`
     }
   },
   props: {
+    filename: {
+      type: String
+    },
     columns: {
       type: Array,
       required: true
@@ -50,14 +79,35 @@ export default {
       type: String,
       default: ''
     },
-    buttons: {
+    buttonAdd: {
       type: Object,
       default: () => {
         return {
-          add: { hidden: false, disabled: false },
-          del: { hidden: false, disabled: false },
-          save: { hidden: false, disabled: false },
-          down: { hidden: false, disabled: false }
+          hide: false, disabled: false
+        }
+      }
+    },
+    buttonDel: {
+      type: Object,
+      default: () => {
+        return {
+          hide: false, disabled: false
+        }
+      }
+    },
+    buttonSave: {
+      type: Object,
+      default: () => {
+        return {
+          hide: false, disabled: false
+        }
+      }
+    },
+    buttonDown: {
+      type: Object,
+      default: () => {
+        return {
+          hide: false, disabled: false
         }
       }
     }
@@ -65,7 +115,6 @@ export default {
   mounted () {
     this.applyTheme()
     Grid.setLanguage(this.language)
-
     const gridOptions = {
       rowHeaders: ['checkbox', 'rowNum'],
       rowHeight: 26,
@@ -73,7 +122,8 @@ export default {
       scrollY: true,
       columnOptions: {
         resizable: true
-      }
+      },
+      usageStatistics: false
     }
 
     this.gridInstance = new Grid(Object.assign({
@@ -81,6 +131,8 @@ export default {
       columns: this.columns,
       data: JSON.parse(JSON.stringify(this.data))
     }, Object.assign({}, gridOptions, this.options)))
+
+    console.log(Object.assign({}, gridOptions, this.options))
 
     // data는 observe 기능을 빼고 넣어줘야함.
   },
@@ -94,6 +146,9 @@ export default {
           Grid.applyTheme(this.theme.name, this.theme.value)
         }
       }
+    },
+    clickDownload() {
+      exportExcel(this.filename, this.columns, this.data)
     }
   },
   beforeDestroy() {

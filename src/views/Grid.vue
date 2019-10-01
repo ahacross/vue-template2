@@ -14,10 +14,10 @@ import gridData from '@/apis/tableTempData'
 export default {
   name: 'Grid',
   data() {
-    let gridData10000 = []
-    while (gridData10000.length < 10000) {
-      gridData10000 = gridData10000.concat(gridData)
-    }
+    // let gridData10000 = []
+    // while (gridData10000.length < 10000) {
+    //   gridData10000 = gridData10000.concat(gridData)
+    // }
     return {
       input: '',
       gridProps: {
@@ -27,9 +27,6 @@ export default {
             name: 'name',
             editor: {
               type: 'text'
-            },
-            onAfterChange(ev) {
-              console.log('After change:' + ev)
             }
           },
           {
@@ -57,9 +54,13 @@ export default {
             editor: 'text'
           }
         ],
-        data: gridData10000,
+        data: gridData,
         options: {
-          bodyHeight: 200
+          bodyHeight: 500,
+          pageOptions: {
+            useClient: true,
+            perPage: 10
+          }
         },
         language: 'ko',
         // theme: {

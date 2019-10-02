@@ -1,3 +1,11 @@
 module.exports = {
-  outputDir: 'www'
+  outputDir: 'www',
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost',
+        changeOrigin: true
+      }
+    }
+  }
 }

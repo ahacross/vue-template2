@@ -40,6 +40,7 @@ import 'tui-grid/dist/tui-grid.css'
 import 'tui-pagination/dist/tui-pagination.css'
 import 'tui-date-picker/dist/tui-date-picker.css'
 import Grid from 'tui-grid'
+import { mapGetters } from 'vuex'
 import { exportExcel } from '@/lib/FileExport'
 import { generateUID } from '@/lib/Common'
 
@@ -60,7 +61,7 @@ export default {
       required: true
     },
     data: {
-      type: Array,
+      type: [Array, Object],
       default: () => []
     },
     options: {
@@ -112,9 +113,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['currentLanguage'])
+  },
   mounted () {
     this.applyTheme()
-    Grid.setLanguage(this.language)
+    Grid.setLanguage(this.currentLanguage.grid)
     const gridOptions = {
       rowHeaders: ['checkbox', 'rowNum'],
       rowHeight: 26,
@@ -127,14 +131,21 @@ export default {
     }
 
     this.gridInstance = new Grid(Object.assign({
-      el: document.getElementById('grid'),
+      el: document.getElementById(this.gridId),
       columns: this.columns,
       data: JSON.parse(JSON.stringify(this.data))
     }, Object.assign({}, gridOptions, this.options)))
-
-    console.log(Object.assign({}, gridOptions, this.options))
-
     // data는 observe 기능을 빼고 넣어줘야함.
+    console.log(this.gridInstance)
+    this.gridInstance.on('mouseover', function(e) {
+      if (e.rowKey || e.rowKey === 0) {
+        e.instance.focus(e.rowKey)
+        console.log(e.rowKey)
+      }
+    })
+    this.gridInstance.on('mousedown', function(ev) {
+      return ev.stop()
+    })
   },
   methods: {
     applyTheme() {
@@ -149,6 +160,25 @@ export default {
     },
     clickDownload() {
       exportExcel(this.filename, this.columns, this.data)
+    }
+  },
+  watch: {
+    columns: {
+      handler(columns) {
+        this.gridInstance.setColumns(columns)
+      }
+    },
+    data: {
+      handler(data) {
+        if (Array.isArray(data)) {
+          this.gridInstance.resetData(data)
+        } else {
+          console.log(this, data)
+          this.gridInstance.resetData(data.contents)
+          const page = this.gridInstance.getPagination()
+          page.reset(data.pagination.totalCount)
+        }
+      }
     }
   },
   beforeDestroy() {

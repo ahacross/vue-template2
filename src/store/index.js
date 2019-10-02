@@ -16,13 +16,15 @@ let state = {
       key: 'ko',
       name: '한국어',
       i18n: 'ko',
-      elementUi: 'ko'
+      elementUi: 'ko',
+      grid: 'ko'
     },
     {
       key: 'en',
       name: 'English',
       i18n: 'en',
-      elementUi: 'en'
+      elementUi: 'en',
+      grid: 'en'
     }
   ]
 }

@@ -54,12 +54,12 @@ export default {
             editor: 'text'
           }
         ],
-        data: gridData,
+        data: [],
         options: {
           bodyHeight: 500,
           pageOptions: {
-            useClient: true,
-            perPage: 10
+            // useClient: true,
+            perPage: 5
           }
         },
         language: 'ko',
@@ -87,7 +87,10 @@ export default {
       }
     }
   },
-  components: { TuiGrid }
+  components: { TuiGrid },
+  mounted() {
+    this.gridProps.data = { contents: gridData.slice(3, 10), pagination: { totalCount: gridData.length, page: 3 } }
+  }
 }
 </script>
 

@@ -63,32 +63,39 @@ export default {
           }
         },
         language: 'ko',
-        // theme: {
-        //   name: 'myTheme',
-        //   value: {
-        //     cell: {
-        //       normal: {
-        //         background: '#fbfbfb',
-        //         border: '#e0e0e0',
-        //         color: '#050505'
-        //       },
-        //       header: {
-        //         background: '#ff0000',
-        //         border: '#ffff00'
-        //       },
-        //       editable: {
-        //         background: '#fbfbfb'
-        //       }
-        //     }
-        //   }
-        // },
-        theme: 'striped',
+        theme: {
+          name: 'myTheme',
+          value: {
+            row: {
+              even: {
+                background: '#f5f5f5'
+              },
+              hover: {
+                background: '#ccc'
+              }
+            },
+            cell: {
+              normal: {
+                background: '#fbfbfb',
+                border: '#e0e0e0'
+              },
+              focused: {
+                border: '#418ed4'
+              },
+              disabled: {
+                text: '#b0b0b0'
+              }
+            }
+          }
+        },
+        // theme: 'striped',
         title: '우왕'
       }
     }
   },
   components: { TuiGrid },
   mounted() {
+    console.log(this)
     this.gridProps.data = { contents: gridData.slice(3, 10), pagination: { totalCount: gridData.length, page: 3 } }
   }
 }

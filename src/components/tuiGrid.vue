@@ -137,13 +137,16 @@ export default {
     }, Object.assign({}, gridOptions, this.options)))
     // data는 observe 기능을 빼고 넣어줘야함.
     console.log(this.gridInstance)
-    this.gridInstance.on('mouseover', function(e) {
-      if (e.rowKey || e.rowKey === 0) {
-        e.instance.focus(e.rowKey)
-        console.log(e.rowKey)
-      }
-    })
+    // this.gridInstance.on('mouseover', function(e) {
+    //   if (e.rowKey || e.rowKey === 0) {
+    //     e.instance.focus(e.rowKey)
+    //     console.log(e.rowKey)
+    //   }
+    // })
     this.gridInstance.on('mousedown', function(ev) {
+      return ev.stop()
+    })
+    this.gridInstance.on('click', function(ev) {
       return ev.stop()
     })
   },

@@ -3,7 +3,8 @@ export default {
     add: '추가',
     del: '삭제',
     save: '저장',
-    down: '다운로드'
+    down: '다운로드',
+    close: '닫기'
   },
   menus: {
     title: '블록체인플랫폼',

@@ -136,7 +136,6 @@ export default {
       data: JSON.parse(JSON.stringify(this.data))
     }, Object.assign({}, gridOptions, this.options)))
     // data는 observe 기능을 빼고 넣어줘야함.
-    console.log(this.gridInstance)
     // this.gridInstance.on('mouseover', function(e) {
     //   if (e.rowKey || e.rowKey === 0) {
     //     e.instance.focus(e.rowKey)
@@ -176,7 +175,6 @@ export default {
         if (Array.isArray(data)) {
           this.gridInstance.resetData(data)
         } else {
-          console.log(this, data)
           this.gridInstance.resetData(data.contents)
           const page = this.gridInstance.getPagination()
           page.reset(data.pagination.totalCount)

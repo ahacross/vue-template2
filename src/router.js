@@ -41,7 +41,7 @@ export default new Router({
     {
       path: '/grid',
       name: 'grid',
-      meta: { layout: 'Default' },
+      meta: { layout: 'ADMIN', hideHeader: false },
       component: () => import('./views/Grid')
       // beforeEnter: requireAuth
     }

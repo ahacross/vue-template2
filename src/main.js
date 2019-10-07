@@ -5,10 +5,10 @@ import store from './store/'
 import Meta from 'vue-meta'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import '@/assets/theme/index.css'
 import { setElementUiLocale } from '@/lib/elementUiLocale'
 
-import './assets/css/main.css'
+import '@/assets/css/main.css'
 
 setElementUiLocale(store.getters.currentLanguage.key)
 Vue.use(ElementUI)

@@ -11,7 +11,7 @@ const mutations = {
 
 const getters = {
   getMenuPath(state) {
-    return state.menuPath.join(' > ')
+    return state.menuPath
   }
 }
 

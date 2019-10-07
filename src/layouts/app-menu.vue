@@ -5,7 +5,7 @@
       @select="saveMenuPath"
       :default-active="defaultActive"
       :unique-opened="true"
-      :router="true"
+      :router="false"
       ref="appElMenu">
       <el-menu-item index="dashboard" route="/">
         <i class="el-icon-document"></i>
@@ -106,6 +106,7 @@ export default {
     for (const [key, vm] of Object.entries(this.$refs.appElMenu.items)) {
       if (vm.route === routePath) {
         this.defaultActive = key
+        this.saveMenuPath(vm.index, vm.indexPath, vm)
       }
     }
   },

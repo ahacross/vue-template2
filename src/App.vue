@@ -6,6 +6,7 @@
 
 <script>
 import '@/lib/AddPrototype'
+import ADMIN from '@/layouts/Admin'
 import Default from './layouts/Default'
 import LayoutDefault from './layouts/LayoutDefault'
 import LayoutDefault2 from './layouts/LayoutDefault2'
@@ -16,7 +17,7 @@ export default {
       layoutComponent: 'div'
     }
   },
-  components: { LayoutDefault, LayoutDefault2, Default },
+  components: { LayoutDefault, LayoutDefault2, Default, ADMIN },
   computed: {
     metaLayout () {
       return this.$route.meta.layout

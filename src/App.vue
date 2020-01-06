@@ -5,10 +5,11 @@
 </template>
 
 <script>
+import '@/lib/AddDirective'
 import '@/lib/AddPrototype'
-import Default from './layouts/Default'
-import LayoutDefault from './layouts/LayoutDefault'
-import LayoutDefault2 from './layouts/LayoutDefault2'
+import Default from '@/layouts/Default'
+import Admin from '@/layouts/admin/Admin'
+
 export default {
   name: 'App',
   data () {
@@ -16,7 +17,7 @@ export default {
       layoutComponent: 'div'
     }
   },
-  components: { LayoutDefault, LayoutDefault2, Default },
+  components: { Admin, Default },
   computed: {
     metaLayout () {
       return this.$route.meta.layout
@@ -33,15 +34,17 @@ export default {
 </script>
 
 <style lang="scss">
-* {
+html {
   margin: 0;
   padding: 0;
-}
-
-html {
   line-height: 1.6;
   color: #333;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
 }
 
 p {

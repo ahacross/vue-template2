@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import $ from 'jquery'
 // import './AddPrototype'
-import request from './Ajax'
+import request from '../apis/Ajax'
 import days from './Day'
 
 class Common {

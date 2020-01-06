@@ -21,29 +21,28 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      meta: { layout: 'Default' },
+      meta: { layout: 'Admin' },
       component: () => import('./views/Home')
-    },
-    {
-      path: '/about',
-      name: 'about',
-      meta: { layout: 'LayoutDefault2' },
-      component: () => import('./views/About')
-      // beforeEnter: requireAuth
-    },
-    {
-      path: '/hello',
-      name: 'hello',
-      meta: { layout: 'LayoutDefault2' },
-      component: () => import('./views/HelloWorld')
-      // beforeEnter: requireAuth
     },
     {
       path: '/grid',
       name: 'grid',
-      meta: { layout: 'Default' },
+      meta: { layout: 'User' },
       component: () => import('./views/Grid')
       // beforeEnter: requireAuth
+    },
+    // {
+    //   path: '/chart',
+    //   name: 'chart',
+    //   meta: { layout: 'Default' },
+    //   component: () => import('./views/Chart')
+    //   // beforeEnter: requireAuth
+    // },
+    {
+      path: '*',
+      name: '404',
+      meta: { layout: 'Default' },
+      component: () => import('./views/Error')
     }
   ]
 })

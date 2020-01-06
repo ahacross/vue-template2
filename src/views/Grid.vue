@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import TuiGrid from '../components/tuiGrid'
+import TuiGrid from '@/components/tuiGrid'
 import gridData from '@/apis/tableTempData'
 export default {
   name: 'Grid',

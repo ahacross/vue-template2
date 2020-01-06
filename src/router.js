@@ -22,13 +22,13 @@ export default new Router({
       path: '/',
       name: 'home',
       meta: { layout: 'Admin' },
-      component: () => import('./views/Home')
+      component: () => import('@/views/Home')
     },
     {
       path: '/grid',
       name: 'grid',
-      meta: { layout: 'User' },
-      component: () => import('./views/Grid')
+      meta: { layout: 'Admin' },
+      component: () => import('@/views/Grid')
       // beforeEnter: requireAuth
     },
     // {

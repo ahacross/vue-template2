@@ -4,7 +4,7 @@
     <el-menu
       @select="saveMenuPath"
       :unique-opened="true"
-      :router="false"
+      :router="true"
       ref="appElMenu">
       <el-menu-item index="default" route="/">
         <i class="el-icon-document"></i>
@@ -61,7 +61,9 @@ export default {
   data () {
     return {
       curLang: '',
-      defaultActive: '/'
+      defaultActive: '/',
+      activeIndex: null,
+      prefix: '/admin/'
     }
   },
   computed: {
@@ -86,22 +88,31 @@ export default {
     ...mapActions(['changeLanguage']),
     ...mapMutations('common', ['menuPath']),
     saveMenuPath(keyIdx, keyIdxPath, node) {
-      const menuPath = []
+      if (keyIdx === 'logout') {
+        return false
+      } else if (this.activeIndex !== keyIdx) {
+        const menuPath = []
 
-      for (const index of keyIdxPath.reverse()) {
-        if (node.index !== index) {
-          node = node.parentMenu
+        for (const index of keyIdxPath.reverse()) {
+          if (node.index !== index) {
+            node = node.parentMenu
+          }
+          menuPath.push(this.getMenuText(node))
         }
-        menuPath.push(this.getMenuText(node))
+        menuPath.push(this.$l('title'))
+        this.menuPath(menuPath.reverse())
+        this.activeIndex = keyIdx
       }
-      menuPath.push(this.$l('title'))
-      this.menuPath(menuPath.reverse())
     },
     getMenuText(node) {
-      let menuText = node.$slots.default.first().text
-      if (!menuText) {
-        menuText = node.$slots.title.filter(vn => vn.tag === 'span').first().children.first().text
+      let menuText
+
+      if (node.items) {
+        menuText = node.$el.querySelector('[slot=title]').textContent
+      } else {
+        menuText = node.$el.textContent
       }
+
       return menuText
     }
   },

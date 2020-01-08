@@ -18,5 +18,13 @@ export default {
     err404Path: '"{path}"는 설정되지 않은 URL 입니다.'
   },
   etc: {
+  },
+  picker: {
+  },
+  validator: {
+    empty: '{name} 값이 없습니다.',
+    min: '{name}의 길이가 최소값({min})보다 작습니다.',
+    max: '{name}의 길이가 최대값({max})보다 큽니다.',
+    minmax: '{name}의 길이가 허용범위({min}~{max})에 맞지 않습니다.'
   }
 }

@@ -1,41 +1,34 @@
 import Vue from 'vue'
+import set from 'lodash/set'
+import get from 'lodash/get'
 
-Vue.directive('onlyRegexp', {
+const changeValue = function(value, vnode, target) {
+  target.value = value
+  set(vnode.context, vnode.data.model.expression, value)
+}
+
+Vue.directive('onlyInputRegexp', {
   bind: function (el, binding, vnode) {
     const inputTarget = el.querySelector('input')
     let regTxt = binding.value
-    console.log(regTxt)
 
+    // input에서 입력시 keyup 과 유사하게 동작
     el.handler = function () {
-      inputTarget.value = inputTarget.value.replace(new RegExp(`[^${regTxt}]`, 'g'), '')
+      changeValue(inputTarget.value.replace(new RegExp(`[^${regTxt}]`, 'g'), ''), vnode, inputTarget)
     }
     el.addEventListener('input', el.handler)
 
-    let rules = inputTarget.dataset.rules
+    let rules = get(vnode.context.rules, vnode.data.attrs.rules)
     if (rules) {
-      rules = JSON.parse(rules)
       el.handlerBlur = function () {
-        if (inputTarget.value) {
-          const rulesResult = rules.some(rule => {
-            return new RegExp(rule).test(inputTarget.value)
-          })
-
-          if (!rulesResult) {
-            vnode.componentInstance.$alert('IPv4형식이나 도메인 형식에 맞지 않습니다.')
-            inputTarget.value = ''
-          } else {
-            const idx = Number(inputTarget.dataset.idx)
-            const manager = vnode.componentInstance.$parent.$parent.$parent.form.Manager
-            const result = manager.filter(({ Ip }, index) => {
-              return index !== idx && Ip === inputTarget.value
-            })
-
-            if (result.length > 0) {
-              vnode.componentInstance.$alert('이미 추가 하셨습니다.')
-              inputTarget.value = ''
-            } else {
-              manager[idx].Ip = inputTarget.value
-            }
+        const value = inputTarget.value
+        const that = vnode.context
+        const name = vnode.data.attrs.name
+        for (const rule of rules) {
+          if (!new RegExp(rule.regexp).test(value)) {
+            rule.name = name
+            that.$alert(that.$l(rule.msg, rule))
+            break
           }
         }
       }

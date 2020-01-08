@@ -38,3 +38,16 @@ export function exportExcel(filename, columns, data) {
   }
   return vbout
 }
+
+export function exportExcel2(filename, convertData) {
+  const ws = XLSX.utils.aoa_to_sheet(convertData)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, filename)
+  const vbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+  try {
+    FileSaver.saveAs(new Blob([vbout], { type: 'application/octet-stream' }), `${filename}.xlsx`)
+  } catch (e) {
+    console.error(e, vbout)
+  }
+  return vbout
+}

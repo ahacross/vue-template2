@@ -5,7 +5,7 @@
     @return {{methods: {lang(*, *=): *}}}
  */
 
-const exceptions = ['buttons', 'msg', 'picker', 'etc']
+const exceptions = ['buttons', 'msg', 'picker', 'etc', 'validator', 'menus']
 
 export const i18nTranslator = function(prefix) {
   return {

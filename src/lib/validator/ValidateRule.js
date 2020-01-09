@@ -1,4 +1,6 @@
+import { LabelName, RuleName, DataRules } from './config'
 import { empty } from './RegExpTypes'
+
 import get from 'lodash/get'
 export function required() {
   return {
@@ -32,23 +34,35 @@ export function lengMinMax(min, max) {
   }
 }
 
-export function validate(that, form, params) {
+export function validate(that, form) {
   let result = true
   for (const field of form.fields) {
     const vnode = field.$slots.default.first()
-    const rules = get(that.rules, vnode.data.attrs.rules)
+    const rules = get(that[DataRules], vnode.data.attrs[RuleName])
     if (rules) {
-      const value = vnode.elm.querySelector('input').value
-      const name = vnode.data.attrs.name
+      const value = vnode.child.value
+      const name = vnode.data.attrs[LabelName]
+
       for (const rule of rules) {
-        if (!new RegExp(rule.regexp).test(value)) {
-          rule.name = name
-          that.$alert(that.$l(rule.msg, rule))
-          result = false
+        result = validateOne(that, name, value, vnode, rule)
+        if (!result) {
           break
         }
       }
     }
+    if (!result) {
+      break
+    }
   }
   return result
+}
+
+export function validateOne(that, name, value, vnode, rule) {
+  if (!new RegExp(rule.regexp).test(value)) {
+    rule.name = name
+    that.$alert(that.$l(rule.msg, rule))
+    return false
+  } else {
+    return true
+  }
 }

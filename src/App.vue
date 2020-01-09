@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import '@/lib/AddDirective'
+import '@/lib/validator/AddDirective'
 import '@/lib/AddPrototype'
 import Default from '@/layouts/Default'
 import Admin from '@/layouts/admin/Admin'

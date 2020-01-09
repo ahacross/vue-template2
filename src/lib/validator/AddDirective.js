@@ -1,6 +1,9 @@
 import Vue from 'vue'
+import { LabelName, RuleName, DataRules } from './config'
 import set from 'lodash/set'
 import get from 'lodash/get'
+
+import { validateOne } from './ValidateRule'
 
 const changeValue = function(value, vnode, target) {
   target.value = value
@@ -18,16 +21,17 @@ Vue.directive('onlyInputRegexp', {
     }
     el.addEventListener('input', el.handler)
 
-    let rules = get(vnode.context.rules, vnode.data.attrs.rules)
+    let rules = get(vnode.context[DataRules], vnode.data.attrs[RuleName])
     if (rules) {
       el.handlerBlur = function () {
-        const value = inputTarget.value
         const that = vnode.context
-        const name = vnode.data.attrs.name
+        const name = vnode.data.attrs[LabelName]
+        const value = inputTarget.value
+        let result
+
         for (const rule of rules) {
-          if (!new RegExp(rule.regexp).test(value)) {
-            rule.name = name
-            that.$alert(that.$l(rule.msg, rule))
+          result = validateOne(that, name, value, vnode, rule)
+          if (!result) {
             break
           }
         }

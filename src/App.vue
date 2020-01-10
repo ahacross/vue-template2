@@ -7,6 +7,7 @@
 <script>
 import '@/lib/validator/AddDirective'
 import '@/lib/AddPrototype'
+import '@/lib/alert'
 import Default from '@/layouts/Default'
 import Admin from '@/layouts/admin/Admin'
 

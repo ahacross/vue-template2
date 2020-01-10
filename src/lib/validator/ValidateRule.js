@@ -1,7 +1,7 @@
 import { LabelName, RuleName, DataRules } from './config'
 import { empty } from './RegExpTypes'
-
 import get from 'lodash/get'
+
 export function required() {
   return {
     regexp: empty,
@@ -60,7 +60,7 @@ export function validate(that, form) {
 export function validateOne(that, name, value, vnode, rule) {
   if (!new RegExp(rule.regexp).test(value)) {
     rule.name = name
-    that.$alert(that.$l(rule.msg, rule))
+    window.$alert(that.$l(rule.msg, rule))
     return false
   } else {
     return true

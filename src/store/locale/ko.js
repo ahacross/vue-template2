@@ -3,7 +3,9 @@ export default {
     add: '추가',
     del: '삭제',
     save: '저장',
-    down: '다운로드'
+    down: '다운로드',
+    ok: '확인',
+    cancel: '취소'
   },
   menus: {
     title: '타이틀',

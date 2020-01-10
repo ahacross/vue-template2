@@ -3,6 +3,10 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+function loadView(view) {
+  return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view}.vue`)
+}
+
 // const requireAuth = (to, from, next) => {
 //   if (Auth.loggedIn()) {
 //     return next()
@@ -22,27 +26,27 @@ export default new Router({
       path: '/',
       name: 'home',
       meta: { layout: 'Admin' },
-      component: () => import('@/views/Home')
+      component: loadView('Home')
     },
     {
       path: '/grid',
       name: 'grid',
       meta: { layout: 'Admin' },
-      component: () => import('@/views/Grid')
+      component: loadView('Grid')
       // beforeEnter: requireAuth
     },
     // {
     //   path: '/chart',
     //   name: 'chart',
     //   meta: { layout: 'Default' },
-    //   component: () => import('./views/Chart')
+    //   component: loadView('Chart')
     //   // beforeEnter: requireAuth
     // },
     {
       path: '*',
       name: '404',
       meta: { layout: 'Default' },
-      component: () => import('./views/Error')
+      component: loadView('Error')
     }
   ]
 })

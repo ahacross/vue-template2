@@ -30,24 +30,59 @@ const notify = {
     'movable': true,
     'closable': false,
     'pinnable': false,
+    'maximizable': false,
     'transition': 'zoom'
   }
 }
 
 const setAlert = function() {
-  alertify.alert().setting(Object.assign({ 'label': lang('buttons.ok') }, notify.options))
-  setNoti(alertify.alert())
+  setNoti(alertify.alert().setting(Object.assign({ 'label': lang('buttons.ok') }, notify.options)))
 }
 
 const setConfirm = function() {
-  alertify.confirm().setting(Object.assign({ 'labels': { ok: lang('buttons.ok'), cancel: lang('buttons.cancel') } }, notify.options))
-  setNoti(alertify.confirm())
+  setNoti(alertify.confirm().setting(Object.assign({ 'labels': { ok: lang('buttons.ok'), cancel: lang('buttons.cancel') } }, notify.options)))
+}
+
+const setNewAlert = function() {
+  if (!alertify.CustomAlert) { // define a new dialog
+    alertify.dialog('CustomAlert', function factory() {
+      return {
+        main: function(message, ...funcs) {
+          this.message = message
+          this.funcs = funcs
+        },
+        setup: function() {
+          return {
+            buttons: [
+              { text: 'alert' },
+              { text: 'confirm' },
+              { text: '취소', last: true }
+            ],
+            focus: { element: 0 },
+            options: Object.assign({}, notify.options)
+          }
+        },
+        prepare: function() {
+          this.setContent(this.message)
+        },
+        callback: function (closeEvent) {
+          if (closeEvent.button.last) {
+            closeEvent.cancel = false
+          } else {
+            this.funcs[closeEvent.index]()
+          }
+        }
+      }
+    })
+
+    setNoti(alertify.CustomAlert())
+  }
 }
 
 const init = function() {
-  // notify.options
   setAlert()
   setConfirm()
+  setNewAlert()
 }
 setTimeout(init, 500)
 
@@ -67,4 +102,8 @@ window.$confirm = function(msg, callback, params) {
   } else {
     alertify.confirm(msg, callback)
   }
+}
+
+window.$CustomAlert = function(msg, func1, func2) {
+  alertify.CustomAlert(msg, func1, func2)
 }

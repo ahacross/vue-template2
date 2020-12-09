@@ -1,0 +1,27 @@
+export const engS = 'a-z'
+export const engL = 'A-Z'
+export const num = '0-9'
+export const number = '^[\\d]+$'
+export const kor = 'ㄱ-ㅎㅏ-ㅣ가-힣'
+export const engSLNum = 'a-zA-Z0-9'
+export const emailType = 'a-zA-Z0-9~!@#$%^&*_+-=",<\\.>?'
+export const engSL = 'a-zA-Z'
+export const phone = '^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})[-]?([0-9]{3,4})[-]?([0-9]{4})$'
+// export const mobile = '(01[016789])[-]?([1-9]{1}[0-9]{2,3})[-]?([0-9]{4})$'
+export const mobile = '(01[016789])[-]?([0-9]{3,4})[-]?([0-9]{4})$'
+export const iPv4 = '^(1[0-9]{2}|2[0-4][0-9]|25[0-5]|[0-9]{1,2})(\\.(1[0-9]{2}|2[0-4][0-9]|25[0-5]|[0-9]{1,2})){3}$'
+// export const email = '^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$'
+export const email = '^[a-zA-Z0-9_+.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z0-9]{2,10}$'
+export const domain = 'https?:\\/\\/(\\w*:\\w*@)?[-\\w.]+(:\\d+)?(\\/([\\w/_.]*(\\?\\s+)?)?)?'
+export const empty = '^.+$'
+export const password = '^(?=.*[a-zA-Z])((?=.*\\d)(?=.*\\W)).{8,15}$'
+// export const password = '^.{8,15}$'
+// 주민등록번호
+export const socialSecurityNumber = '^((?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1])))[-]?([1-4][0-9]{6})$'
+export const keypadSocialSecurityNumber = '^.{13}$'
+// 사업자번호
+export const businessNumber = '^([0-9]{3})[-]?([0-9]{2})[-]?([0-9]{5})$'
+// 숫자와 특수문자
+export const numSpecial = '0-9~!@#$%^&*\\(\\)_+-=\\[{\\]}|;\\:",<\\.>\\/?"'
+// 생년월일
+export const dateOfBirth = '^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))$'

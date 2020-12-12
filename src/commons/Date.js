@@ -65,3 +65,17 @@ export function diff(date1, date2 = null) {
 
   return value === 0 ? 0 : value > 0 ? 1 : -1
 }
+
+// () 양 끝에 겹치는 경우 제외
+// [] 양 끝에 겹치는 경우 포함
+export function isBetween(date, start, end, isInclude = '()') {
+  return getDate(date).isBetween(start, end, null, isInclude)
+}
+
+export function isAfter(date, date2) {
+  return getDate(date).isAfter(getDate(date2))
+}
+
+export function isBefore(date, date2) {
+  return getDate(date).isBefore(getDate(date2))
+}

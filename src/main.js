@@ -9,9 +9,9 @@ Vue.config.productionTip = false
 Vue.mixin({
   computed: {
     $fx() {
-      const fx = new Commons(this)
-      fx.setVm(this)
-      return fx
+      const commons = new Commons(this)
+      commons.setVm(this)
+      return commons
     }
   }
 })

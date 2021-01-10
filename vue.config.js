@@ -70,43 +70,42 @@ module.exports = {
   },
   chainWebpack: config => {
     // 파일명 규칙
-    config.output.chunkFilename(`js/[id].[chunkhash:${Math.floor(Math.random() * 19 + 1)}].js?t=${new Date().getTime()}`)
+    // config.output.chunkFilename(`js/[id].[chunkhash:${Math.floor(Math.random() * 19 + 1)}].js?t=${new Date().getTime()}`)
     // 이미지는 Data URI Scheme을 적용하기 위해 url-loader를 사용하지만 IE에서 data URI Scheme를 적용하면 오류가 나서 limit를 0으로 함
-    const keys = ['images', 'fonts']
-    keys.forEach(key => {
-      config.module
-        .rule(key)
-        .use('url-loader')
-        .loader('url-loader')
-        .tap(options => Object.assign(options, { limit: 0 }))
-    })
+    // const keys = ['images', 'fonts']
+    // keys.forEach(key => {
+    //   config.module
+    //     .rule(key)
+    //     .use('url-loader')
+    //     .loader('url-loader')
+    //     .tap(options => Object.assign(options, { limit: 0 }))
+    // })
   },
   devServer: {
     // local dev server Host Check 끄기
-    disableHostCheck: true,
+    // disableHostCheck: true,
     // local dev server 압축 켜기
-    compress: true,
+    // compress: true,
     /**
      * http-proxy options : https://github.com/chimurai/http-proxy-middleware#http-proxy-options
      */
-    proxy: {
-      /**
-       * (로컬 proxy -> intranet 개발서버) 강남센터 API
-       */
-      '^/v3/web': {
-        target: process.env.VUE_APP_URL,
-        secure: false,
-        changeOrigin: true
-      },
-      /**
-       * (로컬 proxy -> 포털 파일업로드) 강남센터 API
-       */
-      '^/api/fileupload': {
-        target: process.env.VUE_APP_URL,
-        secure: false,
-        changeOrigin: true
-      }
-    }
+    // proxy: {
+    //   /**
+    //    * (로컬 proxy -> intranet 개발서버) 강남센터 API
+    //    */
+    //   '^/v3/web': {
+    //     target: process.env.VUE_APP_URL,
+    //     secure: false,
+    //     changeOrigin: true
+    //   },
+    //   /**
+    //    * (로컬 proxy -> 포털 파일업로드) 강남센터 API
+    //    */
+    //   '^/api/fileupload': {
+    //     target: process.env.VUE_APP_URL,
+    //     secure: false,
+    //     changeOrigin: true
+    //   }
+    // }
   }
-  // transpileDependencies: ['vuex-persist']
 }

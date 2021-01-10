@@ -1,21 +1,9 @@
 import axios from 'axios'
-import { encryptBody } from '@/commons/crypto'
 import { getters, dispatch } from '@/commons/storeUtils'
 
 // ajax에서 에러 감지 안하는 API 목록
 const errorPassRegexpUrl = [
-  '/api/v3/reservations/\\d+', // 미팅룸 취소
-  '/api/v3/reservations/\\d+/refundablePointAndTime', // 미팅룸 환불포인트
-  '/v3/web/login/login.api', // 로그인 API
-  '/v3/web/api/member/apply/emailcheck.api', // 이메일 중복 체크 API
-  // '/v3/web/login/email/send.api', // 비밀번호 찾기
-  '/v3/web/api/event/apply.api', // 이벤트 신청 API
-  '/api/v3/reservations', // 미팅룸 예약 API
-  '/v3/web/MemberInfo/insertMemberInfoFromStaff.api', // 직원등록 API
-  '/v3/web/MemberInfo/changeMemberInfoFromStaff.api', // 직원변경 API
-  '/v3/web/mediaCenter/createReservationInfo.api', // 미디어센터 예약 API
-  '/api/v3/boards/list' // 게시글 목록 API
-  // '/v3/web/MemberInfo/updateMemberInfoByPotal.api' // 내 정보 변경 API
+  // '/api/v3/reservations/\\d+', // 미팅룸 취소
 ]
 
 class Ajax {
@@ -57,7 +45,7 @@ class Ajax {
           if (dataNoEncrypt) {
             this._options.data = JSON.stringify(data)
           } else {
-            this._options.data = encryptBody(data)
+            this._options.data = data
           }
         }
       } else {
@@ -194,21 +182,13 @@ async function errorMessage(msg, res) {
 }
 
 function moveMain() {
-  const that = window.$root
+  const $root = window.$root
   // that.$utils.goRouter(that, { name: 'main' })
-  that.$nextTick(() => {
+  $root.$nextTick(() => {
     const body = document.querySelector('body.scrollLock')
     if (body) {
       body.classList.remove('scrollLock')
     }
-    that.$loadingOff()
+    $root.$loadingOff()
   })
-}
-
-export function addQueryStringJsonData(url, data) {
-  return `${url}?jsonData=${encodeURIComponent(JSON.stringify(data))}`
-}
-
-export function ajaxDownload(url) {
-  return ajax(url, 'get', { responseType: 'blob' })
 }

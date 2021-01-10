@@ -34,6 +34,14 @@ class Commons {
     return Object.keys(obj)
   }
 
+  getEntries(obj) {
+    return Object.entries(obj)
+  }
+
+  getValues(obj) {
+    return Object.values(obj)
+  }
+
   isEmpty(obj) {
     if (!Array.isArray(obj) && typeof obj === 'object') {
       obj = this.getKeys(obj)
@@ -104,6 +112,10 @@ class Commons {
     }
     arr = templateFn ? arr.map(templateFn) : arr
     return isReverse ? arr.reverse() : arr
+  }
+
+  async delay(ms) {
+    return await new Promise(resolve => setTimeout(resolve, ms))
   }
 }
 

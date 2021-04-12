@@ -4,38 +4,39 @@ import ko from 'dayjs/locale/ko'
 dayjs.extend(customParseFormat)
 window.dayjs = dayjs
 
-export function getDate(paramsDate, pattern) {
-  if (paramsDate) {
-    if (!dayjs.isDayjs(paramsDate) && typeof paramsDate === 'string') {
-      paramsDate = pattern ? dayjs(paramsDate, pattern) : dayjs(paramsDate)
-    }
+export function makeDate(date, pattern) {
+  let dayjsObj
+  if (dayjs.isDayjs(date)) {
+    dayjsObj = date
+  } else if (typeof date === 'string') {
+    dayjsObj = pattern ? dayjs(date, pattern) : dayjs(date)
+  } else if (date instanceof Date) {
+    dayjsObj = dayjs(date.toJSON())
   } else {
-    paramsDate = dayjs()
+    dayjsObj = dayjs()
   }
 
-  return paramsDate
+  return dayjsObj
 }
 
 export function getTimestamp(date) {
-  return getDate(date).valueOf()
+  return makeDate(date).valueOf()
 }
 
 export function minus(amount, unit, date) {
-  return getDate(date).subtract(amount, unit)
+  return makeDate(date).subtract(amount, unit)
 }
 
-export function add(amount, unit, date) {
-  return getDate(date).add(amount, unit)
+export function plus(amount, unit, date) {
+  return makeDate(date).add(amount, unit)
 }
 
 export function format(date, pattern = 'YYYY-MM-DD', locale) {
-  if (locale) {
-    if (locale === 'ko') {
-      return getDate(date).locale(ko).format(pattern)
-    }
-  } else {
-    return getDate(date).format(pattern)
+  let obj = makeDate(date)
+  if (locale && locale === 'ko') {
+    obj = obj.locale(ko)
   }
+  return obj.format(pattern)
 }
 
 /**
@@ -69,13 +70,13 @@ export function diff(date1, date2 = null) {
 // () 양 끝에 겹치는 경우 제외
 // [] 양 끝에 겹치는 경우 포함
 export function isBetween(date, start, end, isInclude = '()') {
-  return getDate(date).isBetween(start, end, null, isInclude)
+  return makeDate(date).isBetween(start, end, null, isInclude)
 }
 
 export function isAfter(date, date2) {
-  return getDate(date).isAfter(getDate(date2))
+  return makeDate(date).isAfter(makeDate(date2))
 }
 
 export function isBefore(date, date2) {
-  return getDate(date).isBefore(getDate(date2))
+  return makeDate(date).isBefore(makeDate(date2))
 }

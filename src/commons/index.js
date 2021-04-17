@@ -9,8 +9,10 @@ import Dom from './Dom'
 import Storage from './Storage'
 import './addPrototypes'
 import { format, diff } from '@/commons/Date'
+import { getDatePattern } from './dateFormat'
 window.format = format
 window.diff = diff
+window.patterns = getDatePattern
 class Commons {
   setVm(ins) {
     this.vm = ins

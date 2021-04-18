@@ -1,3 +1,5 @@
+const num = /\d+/g
+const notNum = /[^\d]+/g
 const date = '(\\d{4})([^\\d]?)(0[1-9]|1[0-2])([^\\d]?)(0[1-9]|[1-2]\\d|3[0-1])'
 const hm = '([01]\\d|2[0-4])([^\\d]?)(0[1-9]|[1-5]\\d)'
 const time = `${hm}([^\\d]?)(0[1-9]|[1-5]\\d)`
@@ -8,8 +10,6 @@ patternMap.set('12', `${date}([^\\d]?)${hm}`)
 patternMap.set('14', `${date}([^\\d]?)${time}`)
 
 const formatArr = ['YYYY', 'MM', 'DD', 'HH', 'mm', 'ss']
-const num = /\d+/g
-const notNum = /[^\d]+/g
 
 // 20201123 입력 -> YYYYMMDD 출력
 // 2020-11-23 -> YYYY-MM-DD
